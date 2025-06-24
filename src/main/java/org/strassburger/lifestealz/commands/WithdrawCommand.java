@@ -2,6 +2,7 @@ package org.strassburger.lifestealz.commands;
 
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,6 +18,7 @@ import org.strassburger.lifestealz.util.MessageUtils;
 import org.strassburger.lifestealz.util.customitems.CustomItemManager;
 import org.strassburger.lifestealz.storage.PlayerData;
 
+import java.util.Arrays;
 import java.util.List;
 
 public final class WithdrawCommand implements CommandExecutor, TabCompleter {
@@ -77,6 +79,7 @@ public final class WithdrawCommand implements CommandExecutor, TabCompleter {
                 availableSpace += (64 - item.getAmount());
             }
             if (availableSpace >= heartsToWithdraw) {
+                Bukkit.getServer().broadcast(player.getName() + " has withdrawn " + heartsToWithdraw + " hearts", Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
                 break;
             }
         }
@@ -142,6 +145,8 @@ public final class WithdrawCommand implements CommandExecutor, TabCompleter {
                 );
                 Bukkit.broadcast(elimAnnouncementMsg);
             }
+
+
 
             return false;
         }

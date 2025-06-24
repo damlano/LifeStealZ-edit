@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.Nullable;
 import org.strassburger.lifestealz.LifeStealZ;
 import org.strassburger.lifestealz.util.MessageUtils;
@@ -121,6 +122,16 @@ public final class CustomItemManager {
     public static ItemStack createNaturalDeathHeart() {
         return createCustomItem(LifeStealZ.getInstance().getConfig().getString("heartItem.naturalDeath", "defaultheart"));
     }
+
+    public static boolean isCraftedHeart(ItemStack item, Plugin plugin) {
+        if (item == null || !item.hasItemMeta()) return false;
+
+        NamespacedKey key = new NamespacedKey(plugin, "crafted_heart");
+        return item.getItemMeta()
+                .getPersistentDataContainer()
+                .has(key, PersistentDataType.STRING);
+    }
+
 
     /**
      * Creates the revive heart item

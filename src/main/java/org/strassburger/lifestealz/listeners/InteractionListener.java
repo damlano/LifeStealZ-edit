@@ -21,6 +21,8 @@ import org.strassburger.lifestealz.storage.PlayerData;
 
 import java.util.List;
 
+import static org.strassburger.lifestealz.util.customitems.CustomItemManager.isCraftedHeart;
+
 public final class InteractionListener implements Listener {
     private final LifeStealZ plugin;
 
@@ -106,6 +108,14 @@ public final class InteractionListener implements Listener {
         CustomHeartItemData customItemData;
         String customItemId = CustomItemManager.getCustomItemId(item);
 
+        if (player.getMaxHealth() >= 20.0) {
+            player.sendMessage("§4your max health is above 10 hearts!");
+            return;
+        }
+
+        System.out.println(player.name());
+
+
         try {
             customItemData = new CustomHeartItemData(customItemId);
         } catch (IllegalArgumentException e) {
@@ -185,6 +195,8 @@ public final class InteractionListener implements Listener {
 
         player.sendMessage(MessageUtils.getAndFormatMsg(true, "heartconsume", "&7Consumed a heart and got &c%amount% &7hearts!", new MessageUtils.Replaceable("%amount%", savedHeartAmount + "")));
         CooldownManager.lastHeartUse.put(player.getUniqueId(), System.currentTimeMillis());
+        Bukkit.getServer().broadcast(player.getName() + " has used a heart.", Server.BROADCAST_CHANNEL_ADMINISTRATIVE);
+
     }
 
     private void handleReviveItem(ItemStack item, Player player, EquipmentSlot hand, PlayerInteractEvent event) {
