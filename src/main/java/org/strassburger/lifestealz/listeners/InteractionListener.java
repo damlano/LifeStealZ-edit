@@ -112,10 +112,7 @@ public final class InteractionListener implements Listener {
             player.sendMessage("§4your max health is above 10 hearts!");
             return;
         }
-
-        System.out.println(player.name());
-
-
+        
         try {
             customItemData = new CustomHeartItemData(customItemId);
         } catch (IllegalArgumentException e) {
